@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require('src/php-imap-reader/Email.php');
 require('src/php-imap-reader/EmailAttachment.php');
 require('src/php-imap-reader/Reader.php');
