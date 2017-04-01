@@ -96,7 +96,8 @@ While looping through the returned emails, each email object can be used as belo
 ```
 
 # Requirements
-PHP 5.3
+PHP 5.3+
+
 PHP IMAP Extension
 
 # License
