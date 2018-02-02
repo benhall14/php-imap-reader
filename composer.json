@@ -1,0 +1,23 @@
+{
+    "name": "benhall14/php-imap-reader",
+    "description": "A PHP class that makes working with IMAP in PHP as easy as possible.",
+    "homepage": "https://github.com/benhall14/php-imap-reader",
+    "keywords": ["imap"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Hall",
+            "email": "benhall14@hotmail.com",
+            "homepage": "https://github.com/benhall14",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "benhall14\\": "src/"
+        }
+    }
+}
