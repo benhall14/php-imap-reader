@@ -1,8 +1,8 @@
 <?php
 
-require('src/php-imap-reader/Email.php');
-require('src/php-imap-reader/EmailAttachment.php');
-require('src/php-imap-reader/Reader.php');
+require('src/phpImapReader/Email.php');
+require('src/phpImapReader/EmailAttachment.php');
+require('src/phpImapReader/Reader.php');
 
 use benhall14\phpImapReader\Email;
 use benhall14\phpImapReader\EmailAttachment;

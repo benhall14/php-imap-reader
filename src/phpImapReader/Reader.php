@@ -137,6 +137,8 @@ class Reader
         $this->save_attachments = false;
 
         if ($attachment_dir) {
+            $attachment_dir = rtrim($attachment_dir, DIRECTORY_SEPARATOR);
+
             if (!is_dir($attachment_dir)) {
                 throw new Exception('ERROR: Directory "' . $attachment_dir . '" could not be found.');
             }
@@ -183,9 +185,10 @@ class Reader
         if (!$stream) {
             $last_error = imap_last_error();
 
+            var_dump(imap_errors());
             imap_errors();
 
-            throw new Exception('ERROR: Could Not Connect (' . $lastError . ')');
+            throw new Exception('ERROR: Could Not Connect (' . (!empty($lastError) ? $lastError : 'unknown') . ')');
         }
 
         return $stream;
@@ -324,6 +327,16 @@ class Reader
     }
 
     /**
+     * An alias of unseen. See unseen().
+     *
+     * @return void
+     */
+    public function unread()
+    {
+        return $this->unseen();
+    }
+
+    /**
      * Add 'from' to the mode selection. This allows for matching emails 'from' the given email address.
      * @param  string $from The sender email address.
      * @return object Return this instance for chain-ability.
@@ -397,6 +410,16 @@ class Reader
     }
 
     /**
+     * Alias of seen(). See Seen().
+     *
+     * @return void
+     */
+    public function read()
+    {
+        $this->seen();
+    }
+
+    /**
      * Add the new flag to the mode selection. This allows for matching new emails.
      * @return object Return this instance for chain-ability.
      */
@@ -449,6 +472,8 @@ class Reader
      */
     public function beforeDate($date)
     {
+        $date = date('d-M-Y', strtotime($date));
+        
         $this->modes[] = 'BEFORE "' . $date . '"';
 
         return $this;
@@ -461,6 +486,8 @@ class Reader
      */
     public function sinceDate($date)
     {
+        $date = date('d-M-Y', strtotime($date));
+
         $this->modes[] = 'SINCE "' . $date . '"';
 
         return $this;
@@ -509,6 +536,8 @@ class Reader
      */
     public function onDate($date)
     {
+        $date = date('d-M-Y', strtotime($date));
+
         $this->modes[] = 'ON "' . $date . '"';
 
         return $this;
@@ -825,6 +854,8 @@ class Reader
                     $attachment->setType('attachment');
                 }
 
+                $attachment->setAttachmentData($data);
+
                 if ($this->save_attachments) {
                     $attachment->setFilePath($this->attachment_dir . DIRECTORY_SEPARATOR . $attachment->name());
 
@@ -833,8 +864,6 @@ class Reader
                             file_put_contents($attachment->filePath(), $data);
                         }
                     }
-                } else {
-                    #$attachment->setAttachmentContent($data);
                 }
 
                 $email->addAttachment($attachment);
@@ -854,7 +883,7 @@ class Reader
                     $email->setHTML($data);
                 }
             
-            # part->type = 2 is MESSAGE
+                # part->type = 2 is MESSAGE
             } elseif ($part->type == 2) {
                 $email->setPlain($data);
             }

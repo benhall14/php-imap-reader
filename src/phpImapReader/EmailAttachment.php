@@ -43,6 +43,13 @@ class EmailAttachment
     private $mime;
 
     /**
+     * The attachment data contents.
+     *
+     * @var string
+     */
+    private $attachment_data;
+
+    /**
      * Sets the attachments id.
      * @param int $id The attachment id.
      */
