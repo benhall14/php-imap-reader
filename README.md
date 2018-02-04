@@ -26,9 +26,9 @@ Please make sure you have added the required classes.
 In its simplest form, use the following to connect:
 
 ```php
-define('IMAP_USERNAME', ''); 							# your imap user name
-define('IMAP_PASSWORD', ''); 							# your imap password
-define('IMAP_MAILBOX', ''); 							# your imap address EG. {mail.example.com:993/novalidate-cert/ssl}
+define('IMAP_USERNAME', ''); 				# your imap user name
+define('IMAP_PASSWORD', ''); 				# your imap password
+define('IMAP_MAILBOX', ''); 				# your imap address EG. {mail.example.com:993/novalidate-cert/ssl}
 define('ATTACHMENT_PATH', __DIR__ . '/attachments'); 	# the path to save attachments to or false to skip attachments
 
 try{
@@ -46,14 +46,14 @@ try{
         ->unflagged()               # get all UNFLAGGED emails
         ->unanswered()              # get all UNANSWERED emails
         ->deleted()                 # get all DELETED emails
-        ->unread() 		            # alias for UNSEEN()
+        ->unread() 		    # alias for UNSEEN()
         ->unseen()                  # get all UNSEEN emails
         ->from($email)              # get all emails from $email
         ->searchSubject($string)    # get all emails with $string in the subject line
         ->searchBody($string)       # get all emails with $string in the body
         ->searchText($string)       # get all emails with $string TEXT
         ->seen()                    # get all SEEN emails
-        ->read() 			        # alias for SEEN()
+        ->read() 		    # alias for SEEN()
         ->newMessages()             # get all NEW emails
         ->oldMessages()             # get all OLD emails
         ->keyword($keyword)         # get all emails with $keyword KEYWORD
@@ -91,47 +91,47 @@ try{
 While looping through the returned emails, each email object can be used as below:
 ```php
 
-    $email->isTo('mail@example.com');            # Return true if the email is to $email, else returns false
+    $email->isTo('mail@example.com');   # Return true if the email is to $email, else returns false
 
-    $email->replyTo();              			 # Returns an array of Reply To email addresses (and names)
+    $email->replyTo();              	# Returns an array of Reply To email addresses (and names)
 
-    $email->cc();                 			     # Returns an array of CC email addresses (and names)
+    $email->cc();                 	# Returns an array of CC email addresses (and names)
 
-    $email->to();                                # Returns the recipient email address
+    $email->to();                       # Returns the recipient email address
 
-    $email->id();                                # Returns the id of the email
+    $email->id();                       # Returns the id of the email
 
-    $email->size();                              # Returns the size of the email
+    $email->size();                     # Returns the size of the email
 
-    $email->date($format);        			     # Returns the date in the $format specified. Default Y-m-d H:i:s
+    $email->date($format);        	# Returns the date in the $format specified. Default Y-m-d H:i:s
 
-    $email->subject();          			     # Returns the email subject
+    $email->subject();          	# Returns the email subject
 
-    $email->fromName();     			         # Returns the sender's name, if set.
+    $email->fromName();     		# Returns the sender's name, if set.
 
-    $email->fromEmail();     			         # Returns the sender's email address
+    $email->fromEmail();     		# Returns the sender's email address
 
-    $email->plain();            			     # Returns the plain text body of the email, if present
+    $email->plain();            	# Returns the plain text body of the email, if present
 
-    $email->html();            				     # Returns the html body of the email, if present
+    $email->html();            		# Returns the html body of the email, if present
 
-    $email->hasAttachments();       			 # Returns true/false based on if the email has attachments
+    $email->hasAttachments();       	# Returns true/false based on if the email has attachments
 
-    $email->attachments();      			     # Returns an array of EmailAttachment objects
+    $email->attachments();      	# Returns an array of EmailAttachment objects
 
-    $email->attachment($id);    			     # Returns an attachment based on the given attachment $id
+    $email->attachment($id);    	# Returns an attachment based on the given attachment $id
 
-    $email->isRecent();   			             # Returns true/false based on the recent flag
+    $email->isRecent();   		# Returns true/false based on the recent flag
 
-    $email->isUnseen();       			         # Returns true/false based on the unseen flag
+    $email->isUnseen();       		# Returns true/false based on the unseen flag
 
-    $email->isFlagged();  			             # Returns true/false based on the flagged flag
+    $email->isFlagged();  		# Returns true/false based on the flagged flag
 
-    $email->isAnswered(); 			             # Returns true/false based on the answered flag
+    $email->isAnswered(); 		# Returns true/false based on the answered flag
 
-    $email->isDeleted();      			         # Returns true/false based on the deleted flag
+    $email->isDeleted();      		# Returns true/false based on the deleted flag
 
-    $email->isDraft();          			     # Returns true/false based on the draft flag
+    $email->isDraft();          	# Returns true/false based on the draft flag
 
 ```
 
@@ -148,15 +148,15 @@ The **$email->attachments();** method returns an array of attachments belonging 
 		# loop through the found attachments.
 		foreach($attachments as $attachment){
 
-			$attachment->id(); 			  	      # Returns the attachments ID.
+			$attachment->id(); 			# Returns the attachments ID.
 
-			$attachment->name(); 		    	  # Returns the attachments name.
+			$attachment->name(); 		    	# Returns the attachments name.
 
-			$attachment->filePath(); 		      # Returns the local file path for the attachment. This is based on the ATTACHMENT_PATH constant set in the imap config.
+			$attachment->filePath(); 		# Returns the local file path for the attachment. This is based on the ATTACHMENT_PATH constant set in the imap config.
 
-			$attachment->content();			      # Returns the attachments content data.
+			$attachment->content();			# Returns the attachments content data.
 
-			$attachment->type(); 			      # Returns either 'attachment' or 'inline'.
+			$attachment->type(); 			# Returns either 'attachment' or 'inline'.
 
 		}
 
