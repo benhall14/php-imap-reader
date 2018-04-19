@@ -1,8 +1,6 @@
 <?php
 
-require('src/phpImapReader/Email.php');
-require('src/phpImapReader/EmailAttachment.php');
-require('src/phpImapReader/Reader.php');
+require 'vendor/autoload.php';
 
 use benhall14\phpImapReader\Email;
 use benhall14\phpImapReader\EmailAttachment;

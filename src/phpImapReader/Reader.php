@@ -242,6 +242,21 @@ class Reader
     }
 
     /**
+     * Move mail to specific folder
+     * @param  int $email_id The id of the email to move.
+     * @param  string $folder Destination folder
+     * @return boolean       The result of the action.
+     */
+    public function moveEmailToFolder($email_id, $folder)
+    {
+        if ($this->mailbox == $folder) {
+            return false;
+        }
+
+	return imap_mail_move($this->stream(), (string) $email_id, $folder, CP_UID);
+    }
+
+    /**
      * Get the list of emails from the last get call.
      * @return array An array of returned emails.
      */
