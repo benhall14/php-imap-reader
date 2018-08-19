@@ -5,7 +5,7 @@ This class is written to be chain-able so to create a logically fluent and easil
 
 It simplifies the PHP IMAP_* library into a set of easy to read methods that do the heavy lifting for you.
 
-It has been fully tested to work with PHP 5.3 to **PHP 7.0**
+It has been fully tested to work with PHP 5.3+, including **PHP 7.0.**
 
 # Installation via Composer
 You can now install this class via composer.
@@ -170,7 +170,8 @@ The **$email->attachments();** method returns an array of attachments belonging 
 **PHP IMAP Extension**
 
 # License
-Copyright (c) 2016-2018 Benjamin Hall, benhall14@hotmail.com
+Copyright (c) 2016-2018 Benjamin Hall, ben@conobe.co.uk
+https://conobe.co.uk
 
 Licensed under the MIT license
 
