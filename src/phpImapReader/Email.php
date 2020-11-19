@@ -8,125 +8,147 @@ use stdClass;
 /**
  * IMAP Email Object Class.
  *
- * @copyright  Copyright (c) Benjamin Hall
- * @license https://github.com/benhall14/php-imap-reader
- * @package protocols
- * @author Benjamin Hall <https://linkedin.com/in/benhall14>
-*/
+ * @category  Protocols
+ * @package   Protocols
+ * @author    Benjamin Hall <ben@conobe.co.uk>
+ * @copyright 2019 Copyright (c) Benjamin Hall
+ * @license   MIT https://github.com/benhall14/php-imap-reader
+ * @link      https://conobe.co.uk/projects/php-imap-reader/
+ */
 class Email
 {
     /**
      * The ID of this email.
+     * 
      * @var int
      */
-    private $id;
-    
+    public $id;
+
     /**
      * The date this email was received.
+     * 
      * @var DateTime
      */
-    private $date;
-    
+    public $date;
+
     /**
      * The UNIX time stamp when this email was received.
+     * 
      * @var int
      */
-    private $udate;
-    
+    public $udate;
+
     /**
      * The subject line of this email.
+     * 
      * @var string
      */
-    private $subject;
-    
+    public $subject;
+
     /**
      * The recipient of this email.
+     * 
      * @var array
      */
-    private $to = array();
-    
+    public $to = array();
+
     /**
      * The sender of this email.
+     * 
      * @var string
      */
-    private $from;
-    
+    public $from;
+
     /**
      * An array of Reply To email addresses.
+     * 
      * @var array
      */
-    private $reply_to = array();
-    
+    public $reply_to = array();
+
     /**
      * An array of Carbon Copy recipients.
+     * 
      * @var array
      */
-    private $cc = array();
+    public $cc = array();
 
     /**
      * The 'recent' flag.
+     * 
      * @var boolean
      */
-    private $recent;
-    
+    public $recent;
+
     /**
      * The 'unseen' flag.
+     * 
      * @var boolean
      */
-    private $unseen;
-    
+    public $unseen;
+
     /**
      * The 'flagged' flag.
+     * 
      * @var boolean
      */
-    private $flagged;
-    
+    public $flagged;
+
     /**
      * The 'answered' flag.
+     * 
      * @var boolean
      */
-    private $answered;
-    
+    public $answered;
+
     /**
      * The 'deleted' flag.
+     * 
      * @var boolean
      */
-    private $deleted;
-    
+    public $deleted;
+
     /**
      * The 'draft' flag.
+     * 
      * @var boolean
      */
-    private $draft;
-    
+    public $draft;
+
     /**
      * The integer size of this email.
+     * 
      * @var int
      */
-    private $size;
+    public $size;
 
     /**
      * The plain text body of this email.
+     * 
      * @var string
      */
-    private $text_plain;
-    
+    public $text_plain;
+
     /**
      * The HTML body of this email.
+     * 
      * @var string
      */
-    private $text_html;
+    public $text_html;
 
     /**
      * An array of attachments, including inline.
+     * 
      * @var array
      */
-    private $attachments = array();
+    public $attachments = array();
 
     /**
      * Checks if the email recipient matches the given email address.
-     * @param  string  $email The email address to match against the recipient.
-     * @return boolean        Returns true if the email address matches, else false.
+     * 
+     * @param string $email The email address to match against the recipient.
+     * 
+     * @return boolean
      */
     public function isTo($email)
     {
@@ -141,7 +163,8 @@ class Email
 
     /**
      * Get the 'Reply To' email addresses for this email.
-     * @return array An array of email addresses in the 'Reply To' field.
+     * 
+     * @return array
      */
     public function replyTo()
     {
@@ -150,6 +173,7 @@ class Email
 
     /**
      * Get the 'Carbon Copied' email addresses for this email.
+     * 
      * @return array An array of email addresses in the cc field.
      */
     public function cc()
@@ -159,16 +183,18 @@ class Email
 
     /**
      * Get the recipient of this email.
-     * @return string The recipient information.
+     * 
+     * @return string
      */
     public function to()
     {
         return $this->to;
     }
-    
+
     /**
      * Get the ID of this email.
-     * @return int The ID of the email.
+     * 
+     * @return integer The ID of the email.
      */
     public function id()
     {
@@ -177,7 +203,8 @@ class Email
 
     /**
      * Get the size in bytes of this email.
-     * @return int The size.
+     * 
+     * @return integer
      */
     public function size()
     {
@@ -186,8 +213,10 @@ class Email
 
     /**
      * Get the date that this email was received.
-     * @param  string $format The format in which to return the date.
-     * @return string         The formatted date string.
+     * 
+     * @param string $format The format in which to return the date.
+     * 
+     * @return string
      */
     public function date($format = 'Y-m-d H:i:s')
     {
@@ -196,7 +225,8 @@ class Email
 
     /**
      * Get the subject line of this email.
-     * @return string The subject.
+     * 
+     * @return string
      */
     public function subject()
     {
@@ -205,25 +235,28 @@ class Email
 
     /**
      * Get the sender name of this email.
-     * @return string The 'From' Name.
+     * 
+     * @return string
      */
     public function fromName()
     {
-        return $this->from->name;
+        return $this->from && $this->from->name ? $this->from->name : null;
     }
 
     /**
      * Get the sender email address of this email.
-     * @return string The 'From' email.
+     * 
+     * @return string
      */
     public function fromEmail()
     {
-        return $this->from->email;
+        return $this->from && $this->from->email ? $this->from->email : null;
     }
 
     /**
      * Get the plain text body of this email.
-     * @return string The plain text body.
+     * 
+     * @return string
      */
     public function plain()
     {
@@ -232,7 +265,8 @@ class Email
 
     /**
      * Get the HTML body of this email.
-     * @return string The HTML body.
+     * 
+     * @return string
      */
     public function html()
     {
@@ -241,7 +275,8 @@ class Email
 
     /**
      * Return a boolean based on whether this email has attachments.
-     * @return boolean True if the email has attachments, else false.
+     * 
+     * @return boolean
      */
     public function hasAttachments()
     {
@@ -250,7 +285,8 @@ class Email
 
     /**
      * Return an array of the attachments for this email.
-     * @return array The attachment array.
+     * 
+     * @return array
      */
     public function attachments()
     {
@@ -259,8 +295,10 @@ class Email
 
     /**
      * Return a specific attachment based on the attachment id.
-     * @param  int $attachment_id The attachment to return.
-     * @return EmailAttachment  The attachment object
+     * 
+     * @param integer $attachment_id The attachment to return.
+     * 
+     * @return EmailAttachment
      */
     public function attachment($attachment_id)
     {
@@ -269,7 +307,8 @@ class Email
 
     /**
      * Return the status of the recent flag.
-     * @return boolean The recent flag status.
+     * 
+     * @return boolean
      */
     public function isRecent()
     {
@@ -278,7 +317,8 @@ class Email
 
     /**
      * Return the status of the unseen flag.
-     * @return boolean The unseen flag status.
+     * 
+     * @return boolean
      */
     public function isUnseen()
     {
@@ -287,7 +327,8 @@ class Email
 
     /**
      * Return the status of the flagged flag.
-     * @return boolean The flagged flag status.
+     * 
+     * @return boolean
      */
     public function isFlagged()
     {
@@ -296,7 +337,8 @@ class Email
 
     /**
      * Return the status of the answered flag.
-     * @return boolean The answered flag status.
+     * 
+     * @return boolean
      */
     public function isAnswered()
     {
@@ -305,7 +347,8 @@ class Email
 
     /**
      * Return the status of the deleted flag.
-     * @return boolean The deleted flag status.
+     * 
+     * @return boolean
      */
     public function isDeleted()
     {
@@ -314,7 +357,8 @@ class Email
 
     /**
      * Return the status of the draft flag.
-     * @return boolean The draft flag status.
+     * 
+     * @return boolean
      */
     public function isDraft()
     {
@@ -323,18 +367,24 @@ class Email
 
     /**
      * Set the subject line for this email.
+     * 
      * @param string $subject The subject line string.
+     * 
+     * @return Email
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
-        
+
         return $this;
     }
 
     /**
      * Set the unique id for this email.
-     * @param int $id The id.
+     * 
+     * @param integer $id The id.
+     * 
+     * @return Email
      */
     public function setId($id)
     {
@@ -345,7 +395,10 @@ class Email
 
     /**
      * Set the date for this email.
+     * 
      * @param string $date The Date string.
+     * 
+     * @return Email
      */
     public function setDate($date)
     {
@@ -356,7 +409,10 @@ class Email
 
     /**
      * Set the UNIX time stamp for this email.
-     * @param int $date A UNIX time stamp.
+     * 
+     * @param integer $date A UNIX time stamp.
+     * 
+     * @return Email
      */
     public function setUdate($date)
     {
@@ -367,7 +423,10 @@ class Email
 
     /**
      * Set the size of this email.
-     * @param int $size Size in bytes.
+     * 
+     * @param integer $size Size in bytes.
+     * 
+     * @return Email
      */
     public function setSize($size)
     {
@@ -378,7 +437,10 @@ class Email
 
     /**
      * Sets the unseen flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setUnseen($boolean)
     {
@@ -389,7 +451,10 @@ class Email
 
     /**
      * Sets the answered flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setAnswered($boolean)
     {
@@ -400,7 +465,10 @@ class Email
 
     /**
      * Sets the draft flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setDraft($boolean)
     {
@@ -411,7 +479,10 @@ class Email
 
     /**
      * Sets the recent flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setRecent($boolean)
     {
@@ -422,7 +493,10 @@ class Email
 
     /**
      * Sets the flagged flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setFlagged($boolean)
     {
@@ -433,7 +507,10 @@ class Email
 
     /**
      * Sets the deleted flag based on the given boolean state.
+     * 
      * @param boolean $boolean The flag status.
+     * 
+     * @return Email
      */
     public function setDeleted($boolean)
     {
@@ -444,9 +521,12 @@ class Email
 
     /**
      * Adds a recipient to the 'To' array.
+     * 
      * @param string $mailbox The mailbox.
      * @param string $host    The host name.
      * @param string $name    (optional) The recipient name.
+     * 
+     * @return Email
      */
     public function addTo($mailbox, $host, $name = false)
     {
@@ -471,9 +551,12 @@ class Email
 
     /**
      * Adds a 'Reply To' to 'Reply To' array.
+     * 
      * @param string $mailbox The mailbox.
      * @param string $host    The host name.
      * @param string $name    (optional) The reply to name.
+     * 
+     * @return Email
      */
     public function addReplyTo($mailbox, $host, $name = false)
     {
@@ -498,9 +581,12 @@ class Email
 
     /**
      * Adds a carbon copy entry to this email.
+     * 
      * @param string $mailbox The mailbox.
      * @param string $host    The host name.
      * @param string $name    (optional) The name of the CC.
+     * 
+     * @return Email
      */
     public function addCC($mailbox, $host, $name = false)
     {
@@ -510,7 +596,7 @@ class Email
 
         $cc = new stdClass();
 
-        $cc->name = $name ? : false;
+        $cc->name = $name ?: false;
 
         $cc->mailbox = $mailbox;
 
@@ -525,15 +611,18 @@ class Email
 
     /**
      * Set the 'from' email address for this email.
+     * 
      * @param string $mailbox The mailbox.
      * @param string $host    The host name.
      * @param string $name    (optional) The senders name.
+     * 
+     * @return Email
      */
     public function setFrom($mailbox, $host, $name = false)
     {
         $this->from = new stdClass();
 
-        $this->from->name = $name ? : false;
+        $this->from->name = $name ?: false;
 
         $this->from->mailbox = $mailbox;
 
@@ -545,44 +634,58 @@ class Email
     }
 
     /**
-     * Updates the HTML text body by concatenating the given string to the current HTML body.
+     * Updates the HTML text body by concatenating the given 
+     * string to the current HTML body.
+     * 
      * @param string $html The HTML string to be added to the HTML text body.
+     * 
+     * @return Email
      */
     public function setHTML($html)
     {
         $this->text_html .= trim($html);
-    
+
         return $this;
     }
 
     /**
-     * Updates the plain text body by concatenating the given string to the current plain text body.
+     * Updates the plain text body by concatenating the given 
+     * string to the current plain text body.
+     * 
      * @param string $plain The text string to be added to the plain text body.
+     * 
+     * @return Email
      */
     public function setPlain($plain)
     {
         $this->text_plain .= trim($plain);
- 
+
         return $this;
     }
 
     /**
      * Adds an attachment to this email.
+     * 
      * @param EmailAttachment $attachment An attachment object.
+     * 
+     * @return Email
      */
     public function addAttachment(EmailAttachment $attachment)
     {
-        $this->attachments[ $attachment->id() ] = $attachment;
-        
+        $this->attachments[$attachment->id()] = $attachment;
+
         return $this;
     }
 
     /**
-     * Inject in-line attachments by replacing the attachment ids with the attachment file path.
+     * Inject in-line attachments by replacing the attachment ids
+     * with the attachment file path.
+     * 
      * @param  string $body The email body to have attachments injected.
-     * @return string $body The email body with the attachments injected.
+     * 
+     * @return string
      */
-    private function injectInline($body)
+    public function injectInline($body)
     {
         if ($this->attachments) {
             foreach ($this->attachments as $attachment) {

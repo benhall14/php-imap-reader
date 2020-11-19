@@ -5,53 +5,56 @@ namespace benhall14\phpImapReader;
 /**
  * IMAP Email Attachment Class.
  *
- * @copyright  Copyright (c) Benjamin Hall
- * @license https://github.com/benhall14/php-imap-reader
- * @package protocols
- * @author Benjamin Hall <https://linkedin.com/in/benhall14>
-*/
+ * @category  Protocols
+ * @package   Protocols
+ * @author    Benjamin Hall <ben@conobe.co.uk>
+ * @copyright 2019 Copyright (c) Benjamin Hall
+ * @license   MIT https://github.com/benhall14/php-imap-reader
+ * @link      https://conobe.co.uk/projects/php-imap-reader/
+ */
 class EmailAttachment
 {
     /**
      * The attachment id
+     * 
      * @var int
      */
-    private $id;
+    public $id;
 
     /**
      * The attachment name.
+     * 
      * @var string
      */
-    private $name;
+    public $name;
 
     /**
      * The attachment file path.
+     * 
      * @var string
      */
-    private $file_path;
+    public $file_path;
 
     /**
      * The attachment type.
+     * 
      * @var string
      */
-    private $type;
+    public $type;
 
     /**
      * The attachment mime type.
+     * 
      * @var string
      */
-    private $mime;
-
-    /**
-     * The attachment data contents.
-     *
-     * @var string
-     */
-    private $attachment_data;
+    public $mime;
 
     /**
      * Sets the attachments id.
+     * 
      * @param int $id The attachment id.
+     * 
+     * @return EmailAttachment
      */
     public function setID($id)
     {
@@ -62,7 +65,10 @@ class EmailAttachment
 
     /**
      * Sets the attachments name.
+     * 
      * @param string $name The attachment name.
+     * 
+     * @return EmailAttachment
      */
     public function setName($name)
     {
@@ -73,7 +79,10 @@ class EmailAttachment
 
     /**
      * Sets the attachment type.
+     * 
      * @param string $type The attachment type.
+     * 
+     * @return EmailAttachment
      */
     public function setType($type)
     {
@@ -84,7 +93,10 @@ class EmailAttachment
 
     /**
      * Sets the attachment mime type.
+     * 
      * @param string $mime_type The attachment mime type.
+     * 
+     * @return EmailAttachment
      */
     public function setMime($mime_type)
     {
@@ -95,7 +107,10 @@ class EmailAttachment
 
     /**
      * Sets the attachments file path.
+     * 
      * @param string $file_path The attachment file path.
+     * 
+     * @return EmailAttachment
      */
     public function setFilePath($file_path)
     {
@@ -106,7 +121,10 @@ class EmailAttachment
 
     /**
      * Sets the attachments data
+     * 
      * @param string $data The attachment data.
+     * 
+     * @return EmailAttachment
      */
     public function setAttachmentData($data)
     {
@@ -117,7 +135,8 @@ class EmailAttachment
 
     /**
      * Get the attachments id.
-     * @return int The attachment id.
+     * 
+     * @return integer
      */
     public function id()
     {
@@ -126,7 +145,8 @@ class EmailAttachment
 
     /**
      * Get the attachments name.
-     * @return string The attachment name.
+     * 
+     * @return string
      */
     public function name()
     {
@@ -135,7 +155,8 @@ class EmailAttachment
 
     /**
      * Get the attachments file path.
-     * @return string The attachment file path.
+     * 
+     * @return string
      */
     public function filePath()
     {
@@ -144,16 +165,18 @@ class EmailAttachment
 
     /**
      * Get the attachments content.
-     * @return string The attachment content data.
+     * 
+     * @return string
      */
     public function content()
     {
         return $this->attachment_data;
     }
-    
+
     /**
      * Get the attachments type.
-     * @return string The attachment type.
+     * 
+     * @return string
      */
     public function type()
     {
@@ -162,10 +185,11 @@ class EmailAttachment
 
     /**
      * Gets the inline status of the attachment.
-     * @return boolean Returns true if the attachment is an inline type.
+     * 
+     * @return boolean
      */
     public function isInline()
     {
-        return $this->type == 'inline' ? true : false;
+        return $this->type() == 'inline' ? true : false;
     }
 }
