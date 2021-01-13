@@ -84,7 +84,7 @@ class Reader
     /**
      * Modes - such as NEW or UNSEEN.
      * 
-     * @var string
+     * @var array
      */
     public $modes = array();
 
@@ -871,7 +871,9 @@ class Reader
         // imap_headerinfo doesn't work with the uid, so we use imap_fetchbody instead.
         //$header = imap_headerinfo($this->stream(), $uid);
 
-        $header_from_body = imap_fetchbody($this->stream(), $uid, '0', FT_UID);
+        $options = ($this->mark_as_read) ? FT_UID : FT_UID | FT_PEEK;
+
+        $header_from_body = imap_fetchbody($this->stream(), $uid, '0', $options);
 
         $header = imap_rfc822_parse_headers($header_from_body);
 
@@ -978,7 +980,7 @@ class Reader
      * Decode an email part.
      * 
      * @param Email   $email       The email object to update.
-     * @param string  $part        The part data to decode.
+     * @param object  $part        The part data to decode.
      * @param boolean $part_number The part number.
      * 
      * @return string
