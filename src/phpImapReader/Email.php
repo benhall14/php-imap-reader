@@ -23,6 +23,13 @@ class Email
      * @var int
      */
     public $id;
+    
+    /**
+     * The msgno of this email.
+     * 
+     * @var int
+     */
+    public $msgno;
 
     /**
      * The date this email was received.
@@ -37,6 +44,13 @@ class Email
      * @var int
      */
     public $udate;
+    
+    /**
+     * An array containing the custom headers of the email.
+     * 
+     * @var array
+     */
+    public $customHeaders = array();
 
     /**
      * The subject line of this email.
@@ -191,6 +205,36 @@ class Email
         return $this->to;
     }
 
+    /**
+     * Get the ID of this email.
+     * 
+     * @return integer The ID of the email.
+     */
+    public function id()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Get the msgno of this email.
+     * 
+     * @return integer The msgno of the email.
+     */
+    public function msgno()
+    {
+        return $this->msgno;
+    }
+    
+    /**
+     * Get the custom headers of this email.
+     * 
+     * @return array The custom headers of the email.
+     */
+    public function customHeaders()
+    {
+        return $this->customHeaders;
+    }
+    
     /**
      * Get the ID of this email.
      * 
@@ -392,6 +436,20 @@ class Email
 
         return $this;
     }
+    
+    /**
+     * Set the msgno for this email.
+     * 
+     * @param integer $msgno The msgno.
+     * 
+     * @return Email
+     */
+    public function setMsgno($id)
+    {
+        $this->msgno = $msgno;
+
+        return $msgno;
+    }
 
     /**
      * Set the date for this email.
@@ -579,6 +637,26 @@ class Email
         return $this;
     }
 
+    /**
+     * Adds a custom header to this email.
+     * 
+     * @param string $customHeader The custom header to append to the array.
+     * 
+     * @return Email
+     */
+    public function addCustomHeader($customHeader)
+    {
+        if (!$customHeader) {
+            return false;
+        }
+
+        $headerInfo = explode(":", $customHeader);
+        
+        $this->customHeaders[$headerInfo[0]] = (string) trim($headerInfo[1]);
+
+        return $this;
+    }
+    
     /**
      * Adds a carbon copy entry to this email.
      * 

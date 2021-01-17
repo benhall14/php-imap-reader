@@ -881,7 +881,7 @@ class Reader
             return null;
         }
 
-        $email->setid($uid);
+        $email->setId($uid);
 
         $email->setSize(isset($header->Size) ? $header->Size : 0);
 
@@ -972,6 +972,24 @@ class Reader
         } else {
             $this->decodePart($email, $body);
         }
+        
+        $msgno = imap_msgno($this->stream(), $uid);
+		
+		$email->setMsgno($msgno);
+		
+		$headers = imap_fetchheader($this->stream(), $email->msgno);
+		
+		if ($headers) {
+		
+			$headersArray = explode("\n", imap_fetchheader($this->stream(), $email->msgno));
+		
+			foreach ($headersArray as $header) {
+				if (strpos($header, "X-") !== false) {
+					$email->addCustomHeader($header);
+				}
+			}
+		
+		}
 
         return $email;
     }
