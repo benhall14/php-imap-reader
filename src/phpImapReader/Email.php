@@ -23,6 +23,13 @@ class Email
      * @var int
      */
     public $id;
+    
+    /**
+     * The msgno of this email.
+     * 
+     * @var int
+     */
+    public $msgno;
 
     /**
      * The date this email was received.
@@ -37,6 +44,13 @@ class Email
      * @var int
      */
     public $udate;
+    
+    /**
+     * An array containing the custom headers of the email.
+     * 
+     * @var array
+     */
+    public $custom_headers = array();
 
     /**
      * The subject line of this email.
@@ -200,7 +214,27 @@ class Email
     {
         return $this->id;
     }
-
+    
+    /**
+     * Get the msgno of this email.
+     * 
+     * @return integer The msgno of the email.
+     */
+    public function msgno()
+    {
+        return $this->msgno;
+    }
+    
+    /**
+     * Get the custom headers of this email.
+     * 
+     * @return array The custom headers of the email.
+     */
+    public function customHeaders()
+    {
+        return $this->custom_headers;
+    }
+    
     /**
      * Get the size in bytes of this email.
      * 
@@ -392,6 +426,20 @@ class Email
 
         return $this;
     }
+    
+    /**
+     * Set the msgno for this email.
+     * 
+     * @param integer $msgno The msgno.
+     * 
+     * @return Email
+     */
+    public function setMsgno($msgno)
+    {
+        $this->msgno = $msgno;
+
+        return $this;
+    }
 
     /**
      * Set the date for this email.
@@ -579,6 +627,52 @@ class Email
         return $this;
     }
 
+    /**
+     * Adds a custom header to this email.
+     * 
+     * @param string $custom_header The custom header to append to the array.
+     * 
+     * @return Email
+     */
+    public function addCustomHeader($custom_header)
+    {
+        if (!$custom_header) {
+            return false;
+        }
+
+        $header_info = explode(":", $custom_header);
+        
+        if (is_array($header_info) && isset($header_info[0]) && isset($header_info[1])) {
+            $this->custom_headers[$header_info[0]] = (string) trim($header_info[1]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns a specific header (if it exists), or returns null.
+     *
+     * @param string $header_name
+     *
+     * @return string
+     */
+    public function getCustomHeader($header_name)
+    {
+        return isset($this->custom_headers) && isset($this->custom_headers[$header_name]) ? $this->custom_headers[$header_name] : null;
+    }
+
+    /**
+     * An alias for getCustomHeader
+     *
+     * @param string $header_name
+     *
+     * @return string
+     */
+    public function getHeader($header_name)
+    {
+        return $this->getCustomHeader($header_name);
+    }
+    
     /**
      * Adds a carbon copy entry to this email.
      * 
