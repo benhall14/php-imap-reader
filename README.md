@@ -68,6 +68,7 @@ try{
         ->page($page)               # used with limit to create pagination
         ->orderASC()                # order the emails returned in ASCending order
         ->orderDESC()               # order the emails returned in DESCendeing order
+        ->reset()                   # resets the current reader to be able to reconnect to another folder/mailbox.
         ->all()                     # get all emails (default)
         ->get();                    # finally make the connection and retrieve the emails.
     
@@ -78,6 +79,9 @@ try{
         # see below.
 
     }
+
+    # Reset the reader and connect to another folder.
+    $imap->reset()->folder('Sent')->get();
     
     # ... your code here ...
 
@@ -170,7 +174,7 @@ The **$email->attachments();** method returns an array of attachments belonging 
 **PHP IMAP Extension**
 
 # License
-Copyright (c) 2016-2020 Benjamin Hall, ben@conobe.co.uk
+Copyright (c) 2016-2021 Benjamin Hall, ben@conobe.co.uk
 https://conobe.co.uk
 
 Licensed under the MIT license

@@ -141,7 +141,7 @@ class Reader
      * 
      * @return boolean
      */
-    public function __construct($hostname, $user_name, $password, $attachment_dir = false, $mark_as_read = true)
+    public function __construct($hostname, $user_name, $password, $attachment_dir = false, $mark_as_read = true, $encoding = 'UTF-8')
     {
         $this->hostname = $hostname;
 
@@ -149,7 +149,7 @@ class Reader
 
         $this->password = $password;
 
-        $this->encoding = 'UTF-8';
+        $this->encoding = $encoding;
 
         $this->retry = 0;
 
@@ -232,10 +232,22 @@ class Reader
      */
     public function close()
     {
-        if ($this->stream(false) && is_resource($this->stream(false))) {
-            imap_close($this->stream(false), CL_EXPUNGE);
+        if (is_resource($this->imap)) {
+            imap_close($this->imap, CL_EXPUNGE);
         }
 
+        return $this;
+    }
+
+    /**
+     * Resets the reader to be able to connect to another folder.
+     *
+     * @return Reader
+     */
+    public function reset()
+    {
+        $this->close();
+        
         return $this;
     }
 
@@ -799,7 +811,7 @@ class Reader
         $this->email_count = imap_num_msg($this->stream());
 
         if (!$this->limit) {
-            $this->limit = count($this->email_index);
+            $this->limit = isset($this->email_index) && is_array($this->email_index) ? count($this->email_index) : 0;
         }
 
         if ($this->email_index) {
