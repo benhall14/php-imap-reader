@@ -178,21 +178,33 @@ class Reader
     }
 
     /**
+     * Returns true/false based on if $imap is an imap resource.
+     *
+     * @param mixed $imap
+     *
+     * @return boolean
+     */
+    public function isImapResource($imap)
+    {
+        return is_resource($imap)  && 'imap' == \get_resource_type($imap);
+    }
+
+    /**
      * Fetch the active IMAP stream. If no stream is active, try a connection.
      * 
      * @param boolean $reconnect Whether to reconnect connection.
      * 
      * @return resource
      */
-    public function stream($reconnect = true)
+    public function stream($reconnect = false)
     {
-        if ($this->imap && (!is_resource($this->imap) || !imap_ping($this->imap))) {
+        if ($this->imap && (!$this->isImapResource($this->imap) || !imap_ping($this->imap))) {
             $this->close();
 
             $this->imap = false;
         }
 
-        if (!$this->imap && $reconnect) {
+        if (!$this->imap || $reconnect) {
             $this->imap = $this->connect();
         }
 
@@ -232,7 +244,7 @@ class Reader
      */
     public function close()
     {
-        if (is_resource($this->imap)) {
+        if ($this->isImapResource($this->imap)) {
             imap_close($this->imap, CL_EXPUNGE);
         }
 
@@ -247,7 +259,9 @@ class Reader
     public function reset()
     {
         $this->close();
-        
+
+        $this->emails = [];
+
         return $this;
     }
 
@@ -945,7 +959,7 @@ class Reader
             }
         }
 
-        $body = imap_fetchstructure($this->stream(false), $uid, FT_UID);
+        $body = imap_fetchstructure($this->stream(), $uid, FT_UID);
 
         if (isset($body->parts) && count($body->parts)) {
             foreach ($body->parts as $part_number => $part) {
@@ -954,12 +968,12 @@ class Reader
         } else {
             $this->decodePart($email, $body);
         }
-        
-        $msgno = imap_msgno($this->stream(false), $uid);
-		
-	$email->setMsgno($msgno);
 
-        $header = imap_headerinfo($this->imap, $msgno,20,20);
+        $msgno = imap_msgno($this->stream(), $uid);
+
+        $email->setMsgno($msgno);
+
+        $header = imap_headerinfo($this->imap, $msgno, 20, 20);
 
         $email->setSize(isset($header->Size) ? $header->Size : 0);
 
@@ -990,20 +1004,19 @@ class Reader
         $draft = isset($header->Draft) && $header->Draft == 'X'
             ? true : false;
         $email->setDraft($draft);
-	
-	$headers = imap_fetchheader($this->stream(false), $email->msgno());
-		
-	if ($headers) {
-		
-	    $headers_array = explode("\n", imap_fetchheader($this->stream(false), $email->msgno()));
-		
-	    foreach ($headers_array as $header) {
-		if (strpos($header, "X-") !== false) {
-		    $email->addCustomHeader($header);
-		}
-	    }
-		
-	}
+
+        $headers = imap_fetchheader($this->stream(), $email->msgno());
+
+        if ($headers) {
+
+            $headers_array = explode("\n", imap_fetchheader($this->stream(), $email->msgno()));
+
+            foreach ($headers_array as $header) {
+                if (strpos($header, "X-") !== false) {
+                    $email->addCustomHeader($header);
+                }
+            }
+        }
 
         return $email;
     }

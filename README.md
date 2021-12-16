@@ -5,7 +5,7 @@ This class is written to be chain-able so to create a logically fluent and easil
 
 It simplifies the PHP IMAP_* library into a set of easy to read methods that do the heavy lifting for you.
 
-It has been fully tested to work with PHP 5.3+, including **PHP 7.4.**
+It has been fully tested to work with PHP 5.3+, including **PHP 8.1.**
 
 # Installation via Composer
 You can now install this class via composer.
@@ -33,8 +33,14 @@ define('ATTACHMENT_PATH', __DIR__ . '/attachments'); 	# the path to save attachm
 
 try{
     
+    # set the mark as read flag (true by default). If you don't want emails to be marked as read/seen, set this to false.
+    $mark_as_read = true;
+
+    # You can ommit this to use UTF-8 by default.
+    $encoding = 'UTF-8'
+
     # create a new Reader object
-    $imap = new Reader(IMAP_MAILBOX, IMAP_USERNAME, IMAP_PASSWORD, ATTACHMENT_PATH);
+    $imap = new Reader(IMAP_MAILBOX, IMAP_USERNAME, IMAP_PASSWORD, ATTACHMENT_PATH, $mark_as_read, $encoding);
 
     # use one or more of the following chain-able methods to filter your email selection
     $imap
@@ -169,7 +175,7 @@ The **$email->attachments();** method returns an array of attachments belonging 
 
 # Requirements
 
-**Works with PHP 5.3+ (including PHP 7.4)**
+**Works with PHP 5.3+ (including PHP 8.1)**
 
 **PHP IMAP Extension**
 
