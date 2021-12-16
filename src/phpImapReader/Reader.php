@@ -895,8 +895,6 @@ class Reader
 
         $email->setId($uid);
 
-        $email->setSize(isset($header->Size) ? $header->Size : 0);
-
         $header->subject = isset($header->subject)
             ? $this->decodeMimeHeader($header->subject)
             : false;
@@ -904,8 +902,6 @@ class Reader
         $email->setSubject($header->subject);
 
         $email->setDate(isset($header->date) ? $header->date : null);
-
-        $email->setUdate(isset($header->udate) ? $header->udate : null);
 
         if (isset($header->to)) {
             foreach ($header->to as $to) {
@@ -949,6 +945,26 @@ class Reader
             }
         }
 
+        $body = imap_fetchstructure($this->stream(false), $uid, FT_UID);
+
+        if (isset($body->parts) && count($body->parts)) {
+            foreach ($body->parts as $part_number => $part) {
+                $this->decodePart($email, $part, $part_number + 1);
+            }
+        } else {
+            $this->decodePart($email, $body);
+        }
+        
+        $msgno = imap_msgno($this->stream(false), $uid);
+		
+	$email->setMsgno($msgno);
+
+        $header = imap_headerinfo($this->imap, $msgno,20,20);
+
+        $email->setSize(isset($header->Size) ? $header->Size : 0);
+
+        $email->setUdate(isset($header->udate) ? $header->udate : null);
+
         $recent = isset($header->Recent)
             && ($header->Recent == 'R' || $header->Recent == 'N')
             ? true
@@ -974,34 +990,20 @@ class Reader
         $draft = isset($header->Draft) && $header->Draft == 'X'
             ? true : false;
         $email->setDraft($draft);
-
-        $body = imap_fetchstructure($this->stream(), $uid, FT_UID);
-
-        if (isset($body->parts) && count($body->parts)) {
-            foreach ($body->parts as $part_number => $part) {
-                $this->decodePart($email, $part, $part_number + 1);
-            }
-        } else {
-            $this->decodePart($email, $body);
-        }
-        
-        $msgno = imap_msgno($this->stream(), $uid);
+	
+	$headers = imap_fetchheader($this->stream(false), $email->msgno());
 		
-		$email->setMsgno($msgno);
+	if ($headers) {
 		
-		$headers = imap_fetchheader($this->stream(), $email->msgno());
+	    $headers_array = explode("\n", imap_fetchheader($this->stream(false), $email->msgno()));
 		
-		if ($headers) {
-		
-			$headers_array = explode("\n", imap_fetchheader($this->stream(), $email->msgno()));
-		
-			foreach ($headers_array as $header) {
-				if (strpos($header, "X-") !== false) {
-					$email->addCustomHeader($header);
-				}
-			}
-		
+	    foreach ($headers_array as $header) {
+		if (strpos($header, "X-") !== false) {
+		    $email->addCustomHeader($header);
 		}
+	    }
+		
+	}
 
         return $email;
     }
