@@ -1093,7 +1093,7 @@ class Reader
                 $attachment_id = isset($part->id) ? trim($part->id, " <>") : false;
             } else {
                 $is_inline_attachment = false;
-                $attachment_id = $email->id();
+                $attachment_id = rand();
             }
         }
 
