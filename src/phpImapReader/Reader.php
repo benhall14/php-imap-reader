@@ -959,6 +959,8 @@ class Reader
             }
         }
 
+        $email->setRawBody(imap_fetchbody($this->stream(), $uid, '', FT_UID));
+        
         $body = imap_fetchstructure($this->stream(), $uid, FT_UID);
 
         if (isset($body->parts) && count($body->parts)) {

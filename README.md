@@ -143,6 +143,10 @@ While looping through the returned emails, each email object can be used as belo
 
     $email->isDraft();          	# Returns true/false based on the draft flag
 
+    $email->eml();                  # Returns the email in .eml format
+
+    $email->saveEml($filename);   # Saves the email in .eml format
+
 ```
 
 The **$email->attachments();** method returns an array of attachments belonging to the email in a **benhall14\phpImapReader\EmailAttachment** object. The following methods are available for each attachment.

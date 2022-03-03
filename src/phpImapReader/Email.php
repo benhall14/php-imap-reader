@@ -158,6 +158,13 @@ class Email
     public $attachments = array();
 
     /**
+     * Raw Body
+     *
+     * @var string
+     */
+    public $raw_body;
+
+    /**
      * Checks if the email recipient matches the given email address.
      * 
      * @param string $email The email address to match against the recipient.
@@ -442,6 +449,20 @@ class Email
     }
 
     /**
+     * Sets the raw body.
+     *
+     * @param string $body
+     *
+     * @return Email
+     */
+    public function setRawBody($body)
+    {
+        $this->raw_body = $body;
+
+        return $this;
+    }
+
+    /**
      * Set the date for this email.
      * 
      * @param string $date The Date string.
@@ -671,6 +692,34 @@ class Email
     public function getHeader($header_name)
     {
         return $this->getCustomHeader($header_name);
+    }
+
+    /**
+     * Returns, or saves, the .eml version of the email.
+     *
+     * @param mixed $filename
+     *
+     * @return string
+     */
+    public function eml($filename = null)
+    {
+        if ($filename && !file_exists($filename)) {
+            file_put_contents($filename, $this->raw_body);
+        }
+
+        return $this->raw_body;
+    }
+
+    /**
+     * Save the Email as an .eml file.
+     *
+     * @param string $filename
+     *
+     * @return string
+     */
+    public function saveEml($filename)
+    {
+        return $this->eml($filename);
     }
     
     /**
