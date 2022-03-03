@@ -143,9 +143,9 @@ While looping through the returned emails, each email object can be used as belo
 
     $email->isDraft();          	# Returns true/false based on the draft flag
 
-    $email->eml();                  # Returns the email in .eml format
+    $email->eml();                      # Returns the email in .eml format
 
-    $email->saveEml($filename);   # Saves the email in .eml format
+    $email->saveEml($filename);         # Saves the email in .eml format
 
 ```
 
