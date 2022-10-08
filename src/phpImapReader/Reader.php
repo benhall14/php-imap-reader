@@ -959,7 +959,7 @@ class Reader
             }
         }
 
-        $email->setRawBody(imap_fetchbody($this->stream(), $uid, '', FT_UID));
+        $email->setRawBody(imap_fetchbody($this->stream(), $uid, '', $options));
         
         $body = imap_fetchstructure($this->stream(), $uid, FT_UID);
 
