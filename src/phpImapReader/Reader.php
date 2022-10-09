@@ -271,7 +271,7 @@ class Reader
     /**
      * The number of emails found.
      * 
-     * @var int
+     * @return int
      */
     public function count()
     {
