@@ -75,13 +75,6 @@ class Reader
     public $emails = array();
 
     /**
-     * The number of emails found.
-     * 
-     * @var int
-     */
-    public $email_count;
-
-    /**
      * Modes - such as NEW or UNSEEN.
      * 
      * @var array
@@ -822,8 +815,6 @@ class Reader
             $this->encoding
         );
 
-        $this->email_count = imap_num_msg($this->stream());
-
         if (!$this->limit) {
             $this->limit = isset($this->email_index) && is_array($this->email_index) ? count($this->email_index) : 0;
         }
@@ -1226,5 +1217,17 @@ class Reader
         }
 
         return $converted_string ?: $string;
+    }
+    
+    /**
+     * Get actual count of emails for current criteria.
+     *
+     * @return string $count;
+     */
+    public function count()
+    {
+        $count = imap_num_msg($this->stream());
+        
+        return $count;
     }
 }
