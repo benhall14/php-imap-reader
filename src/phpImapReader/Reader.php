@@ -1222,12 +1222,10 @@ class Reader
     /**
      * Get actual count of emails for current criteria.
      *
-     * @return string $count;
+     * @return int 
      */
     public function count()
     {
-        $count = imap_num_msg($this->stream());
-        
-        return $count;
+        return imap_num_msg($this->stream());
     }
 }
