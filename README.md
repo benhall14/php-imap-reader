@@ -146,6 +146,8 @@ While looping through the returned emails, each email object can be used as belo
     $email->eml();                      # Returns the email in .eml format
 
     $email->saveEml($filename);         # Saves the email in .eml format
+    
+    $email->count();         # Returns number of emails in folder
 
 ```
 
