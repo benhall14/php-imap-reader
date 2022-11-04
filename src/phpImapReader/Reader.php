@@ -12,7 +12,7 @@ use Exception;
  * @category  Protocols
  * @package   Protocols
  * @author    Benjamin Hall <ben@conobe.co.uk>
- * @copyright 2019 Copyright (c) Benjamin Hall
+ * @copyright 2022 Copyright (c) Benjamin Hall
  * @license   MIT https://github.com/benhall14/php-imap-reader
  * @link      https://conobe.co.uk/projects/php-imap-reader/
  */
@@ -288,6 +288,34 @@ class Reader
         return imap_last_error();
     }
 
+    /**
+     * Create a new folder on the IMAP stream.
+     *
+     * @param string $folder_name
+     *
+     * @return boolean
+     */
+    public function makeFolder($folder_name = null)
+    {
+        if (!$folder_name) {
+            return $this;
+        }
+
+        return imap_createmailbox($this->stream(), imap_utf7_encode($this->hostname . $folder_name));
+    }
+
+    /**
+     * Alias for makeFolder. Creates a new folder on the IMAP stream.
+     *
+     * @param string $folder_name
+     *
+     * @return boolean
+     */
+    public function createFolder($folder_name)
+    {
+        return $this->makeFolder($folder_name);
+    }
+    
     /**
      * Delete an email by given email id.
      * 

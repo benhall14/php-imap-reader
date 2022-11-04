@@ -8,7 +8,7 @@ namespace benhall14\phpImapReader;
  * @category  Protocols
  * @package   Protocols
  * @author    Benjamin Hall <ben@conobe.co.uk>
- * @copyright 2019 Copyright (c) Benjamin Hall
+ * @copyright 2022 Copyright (c) Benjamin Hall
  * @license   MIT https://github.com/benhall14/php-imap-reader
  * @link      https://conobe.co.uk/projects/php-imap-reader/
  */

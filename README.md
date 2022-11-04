@@ -88,6 +88,9 @@ try{
 
     # Reset the reader and connect to another folder.
     $imap->reset()->folder('Sent')->get();
+
+    # You can also create a folder on the IMAP stream.
+    $imap->createFolder('New Folder Name');
     
     # ... your code here ...
 
