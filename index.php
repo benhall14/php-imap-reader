@@ -8,7 +8,7 @@ use benhall14\phpImapReader\Reader;
 
 define('IMAP_USERNAME', '');
 define('IMAP_PASSWORD', '');
-define('IMAP_MAILBOX', '');
+define('IMAP_MAILBOX', ''); // For example: {outlook.office365.com:993/imap/ssl/novalidate-cert}
 define('ATTACHMENT_PATH', __DIR__ . '/attachments/');
 
 try {
