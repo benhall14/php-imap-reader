@@ -267,7 +267,7 @@ class Reader
     {
         return $this->close();
     }
-    
+
     /**
      * The number of emails found.
      * 
@@ -277,7 +277,7 @@ class Reader
     {
         return imap_num_msg($this->stream());
     }
-    
+
     /**
      * Get the last error.
      * 
@@ -289,7 +289,41 @@ class Reader
     }
 
     /**
-     * Create a new folder on the IMAP stream.
+     * Alias for doesMailboxExist - Returns true/false based on if the specified folder/mailbox exists on the IMAP stream.
+     *
+     * @param string $folder_name
+     *
+     * @return boolean.
+     */
+    public function doesFolderExist($folder_name = null)
+    {
+        return $this->doesMailboxExist($folder_name);
+    }
+
+    /**
+     * Returns true/false based on if the specified folder/mailbox exists on the IMAP stream.
+     *
+     * @param string $mailbox
+     *
+     * @return boolean
+     */
+    public function doesMailboxExist($mailbox)
+    {
+        if (!$mailbox) {
+            return false;
+        }
+
+        $mailboxes = imap_list($this->stream(), $this->hostname, "*");
+
+        if (!in_array($this->hostname . $mailbox, $mailboxes)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Create a new folder/mailbox on the IMAP stream.
      *
      * @param string $folder_name
      *
@@ -298,12 +332,10 @@ class Reader
     public function makeFolder($folder_name = null)
     {
         if (!$folder_name) {
-            return $this;
+            return false;
         }
 
-        $mailboxes = imap_list($this->stream(), $this->hostname, "*");
-
-        if (in_array($this->hostname . $folder_name, $mailboxes)) {
+        if ($this->doesFolderExist($folder_name)) {
             return false;
         }
 
@@ -311,7 +343,7 @@ class Reader
     }
 
     /**
-     * Alias for makeFolder. Creates a new folder on the IMAP stream.
+     * Alias for makeFolder. Creates a new folder/mailbox on the IMAP stream.
      *
      * @param string $folder_name
      *
@@ -320,6 +352,18 @@ class Reader
     public function createFolder($folder_name)
     {
         return $this->makeFolder($folder_name);
+    }
+
+    /**
+     * Alias for makeFolder. Create a new folder/mailbox on the IMAP stream.
+     *
+     * @param string $mailbox
+     *
+     * @return void
+     */
+    public function createMailbox($mailbox = null)
+    {
+        return $this->doesMailboxExist($mailbox);
     }
 
     /**
@@ -995,7 +1039,7 @@ class Reader
         }
 
         $email->setRawBody(imap_fetchbody($this->stream(), $uid, '', $options));
-        
+
         $body = imap_fetchstructure($this->stream(), $uid, FT_UID);
 
         if (isset($body->parts) && count($body->parts)) {

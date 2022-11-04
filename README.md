@@ -89,8 +89,15 @@ try{
     # Reset the reader and connect to another folder.
     $imap->reset()->folder('Sent')->get();
 
-    # You can also create a folder on the IMAP stream.
+    # You can also create a folder/mailbox on the IMAP stream.
     $imap->createFolder('New Folder Name');
+
+    # You can also check if a mailbox/folder exists on the IMAP stream using:
+    if ($imap->doesMailboxExists('INBOX')) {
+        return "Yes, it exsits";
+    } else {
+        return "No, it doesn't exist.";
+    }
     
     # ... your code here ...
 
