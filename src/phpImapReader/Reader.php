@@ -363,7 +363,7 @@ class Reader
      */
     public function createMailbox($mailbox = null)
     {
-        return $this->doesMailboxExist($mailbox);
+        return $this->makeFolder($mailbox);
     }
 
     /**
