@@ -301,6 +301,12 @@ class Reader
             return $this;
         }
 
+        $mailboxes = imap_list($this->stream(), $this->hostname, "*");
+
+        if (in_array($this->hostname . $folder_name, $mailboxes)) {
+            return false;
+        }
+
         return imap_createmailbox($this->stream(), imap_utf7_encode($this->hostname . $folder_name));
     }
 
@@ -315,7 +321,7 @@ class Reader
     {
         return $this->makeFolder($folder_name);
     }
-    
+
     /**
      * Delete an email by given email id.
      * 
