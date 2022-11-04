@@ -91,6 +91,8 @@ try{
 
     # You can also create a folder/mailbox on the IMAP stream.
     $imap->createFolder('New Folder Name');
+    #or 
+    $imap->createMailbox('New Folder Name');
 
     # You can also check if a mailbox/folder exists on the IMAP stream using:
     if ($imap->doesMailboxExists('INBOX')) {

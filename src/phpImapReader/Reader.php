@@ -359,9 +359,21 @@ class Reader
      *
      * @param string $mailbox
      *
-     * @return void
+     * @return boolean
      */
     public function createMailbox($mailbox = null)
+    {
+        return $this->makeFolder($mailbox);
+    }
+
+    /**
+     * Alias for makeFolder. Create a new folder/mailbox on the IMAP stream.
+     *
+     * @param string $mailbox
+     *
+     * @return boolean
+     */
+    public function makeMailbox($mailbox = null)
     {
         return $this->makeFolder($mailbox);
     }
