@@ -391,6 +391,16 @@ class Reader
     }
 
     /**
+     * Expunge all emails that are marked for deletion on the connected inbox.
+     *
+     * @return boolean
+     */
+    public function expunge()
+    {
+        return imap_expunge($this->stream());
+    }
+
+    /**
      * Mark an email as read by given email id.
      * 
      * @param int $email_id The id of the email to mark as read.
