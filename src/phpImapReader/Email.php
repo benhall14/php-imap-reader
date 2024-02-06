@@ -833,7 +833,9 @@ class Email
         if ($this->attachments) {
             foreach ($this->attachments as $attachment) {
                 if ($attachment->isInline()) {
-                    $body = str_replace('cid:' . $attachment->id(), $attachment->filePath(), $body);
+                    if ($attachment->id() && $attachment->filePath()) {
+                        $body = str_replace('cid:' . $attachment->id(), $attachment->filePath(), $body);
+                    }
                 }
             }
         }
