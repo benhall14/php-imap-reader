@@ -40,6 +40,13 @@ class Reader
     public $password;
 
     /**
+     * The IMAP Encoding
+     *
+     * @var string
+     */
+    public $encoding;
+
+    /**
      * Save attachment status - should we save attachments.
      * 
      * @var boolean
@@ -122,6 +129,20 @@ class Reader
      * @var string
      */
     public $mailbox = 'INBOX';
+
+    /**
+     * Defines whether the email should be auto-marked as read.
+     *
+     * @var boolean
+     */
+    public $mark_as_read = false;
+
+    /**
+     * Defines the attachment directory on disk.
+     *
+     * @var string
+     */
+    public $attachment_dir = null;
 
     /**
      * Sets the IMAP Reader
