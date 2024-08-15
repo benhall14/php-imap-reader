@@ -1255,7 +1255,7 @@ class Reader
                         }
                     }
                 } else {
-                    $attachment->setAttachmentContent($data);
+                    $attachment->setAttachmentData($data);
                 }
 
                 $email->addAttachment($attachment);
