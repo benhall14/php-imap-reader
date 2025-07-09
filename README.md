@@ -202,7 +202,7 @@ The **$email->attachments();** method returns an array of attachments belonging 
 **PHP IMAP Extension**
 
 # License
-Copyright (c) 2016-2021 Benjamin Hall, ben@conobe.co.uk
+Copyright (c) 2016-2025 Benjamin Hall, ben@conobe.co.uk
 https://conobe.co.uk
 
 Licensed under the MIT license
