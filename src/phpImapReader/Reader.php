@@ -1136,9 +1136,12 @@ class Reader
             $headers_array = explode("\n", imap_fetchheader($this->stream(), $email->msgno()));
 
             foreach ($headers_array as $header) {
-                if (strpos($header, "X-") !== false) {
-                    $email->addCustomHeader($header);
-                }
+                /**
+                 * Remove the limit to x-headers only. This allows for all headers to be added.
+                 */
+                //if (strpos($header, "X-") !== false) {
+                $email->addCustomHeader($header);
+                //}
             }
         }
 
