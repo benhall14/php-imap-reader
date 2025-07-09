@@ -1140,7 +1140,7 @@ class Reader
                  * Remove the limit to x-headers only. This allows for all headers to be added.
                  */
                 //if (strpos($header, "X-") !== false) {
-                $email->addCustomHeader($header);
+                $email->addHeader($header);
                 //}
             }
         }

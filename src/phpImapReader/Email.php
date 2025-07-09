@@ -23,7 +23,7 @@ class Email
      * @var int
      */
     public $id;
-    
+
     /**
      * The msgno of this email.
      * 
@@ -44,7 +44,7 @@ class Email
      * @var int
      */
     public $udate;
-    
+
     /**
      * An array containing the custom headers of the email.
      * 
@@ -221,7 +221,7 @@ class Email
     {
         return $this->id;
     }
-    
+
     /**
      * Get the msgno of this email.
      * 
@@ -231,7 +231,7 @@ class Email
     {
         return $this->msgno;
     }
-    
+
     /**
      * Get the custom headers of this email.
      * 
@@ -241,7 +241,17 @@ class Email
     {
         return $this->custom_headers;
     }
-    
+
+    /**
+     * Get the headers of this email.
+     * 
+     * @return array The custom headers of the email.
+     */
+    public function headers()
+    {
+        return $this->customHeaders();
+    }
+
     /**
      * Get the size in bytes of this email.
      * 
@@ -433,7 +443,7 @@ class Email
 
         return $this;
     }
-    
+
     /**
      * Set the msgno for this email.
      * 
@@ -662,12 +672,24 @@ class Email
         }
 
         $header_info = explode(":", $custom_header);
-        
+
         if (is_array($header_info) && isset($header_info[0]) && isset($header_info[1])) {
             $this->custom_headers[$header_info[0]] = (string) trim($header_info[1]);
         }
 
         return $this;
+    }
+
+    /**
+     * An alias for addCustomHeader
+     *
+     * @param string $custom_header
+     *
+     * @return Email
+     */
+    public function addHeader($custom_header)
+    {
+        return $this->addCustomHeader($custom_header);
     }
 
     /**
@@ -721,7 +743,7 @@ class Email
     {
         return $this->eml($filename);
     }
-    
+
     /**
      * Adds a carbon copy entry to this email.
      * 
