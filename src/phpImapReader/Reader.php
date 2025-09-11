@@ -1344,7 +1344,15 @@ class Reader
             return $string;
         }
 
+        $mb_encode = false;
         if (extension_loaded('mbstring')) {
+            $encodings = mb_list_encodings();
+            if (in_array(strtoupper($current_encoding_type), array_map('strtoupper', $encodings))) {
+                $mb_encode = true;
+            }
+        }
+
+        if ($mb_encode) {
             $converted_string = @mb_convert_encoding($string, $this->encoding, $current_encoding_type);
         } else {
             $converted_string = @iconv($current_encoding_type, $this->encoding . '//IGNORE', $string);
