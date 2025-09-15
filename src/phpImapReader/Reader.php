@@ -1235,6 +1235,7 @@ class Reader
             }
 
             if ($file_name) {
+                $file_name = $this->decodeMimeHeader($file_name);
                 $file_name = $attachment_id . '-' . $file_name;
 
                 $attachment = new EmailAttachment();

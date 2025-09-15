@@ -481,7 +481,9 @@ class Email
      */
     public function setDate($date)
     {
-        $this->date = new DateTime($date);
+        $cleanedDate = preg_replace("/\s\(.*\)$/", "", $date);
+
+        $this->date = new DateTime(trim($cleanedDate));
 
         return $this;
     }
