@@ -344,6 +344,28 @@ class Reader
     }
 
     /**
+     * Returns an array of mailboxes.
+     *
+     * @return array
+     */
+    public function listMailboxes()
+    {
+        $mailboxes = imap_list($this->stream(), $this->hostname, "*");
+
+        return $mailboxes ?: [];
+    }
+
+    /**
+     * Alias for listMailboxes. Returns an array of mailboxes.
+     *
+     * @return array
+     */
+    public function listFolders()
+    {
+        return $this->listMailboxes();
+    }
+
+    /**
      * Create a new folder/mailbox on the IMAP stream.
      *
      * @param string $folder_name

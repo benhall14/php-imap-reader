@@ -100,6 +100,17 @@ try{
     } else {
         return "No, it doesn't exist.";
     }
+    # or 
+    if ($imap->doesFolderExists('INBOX')) {
+        return "Yes, it exsits";
+    } else {
+        return "No, it doesn't exist.";
+    }
+
+    # You can also get a list of mailboxes on the hostname.
+    $mailboxes = $imap->listMailboxes(); 
+    #or 
+    $mailboxes = $imap->listFolders();
     
     # ... your code here ...
 
